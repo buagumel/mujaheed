@@ -1,0 +1,37 @@
+name: Auto Deploy to cPanel on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy to cPanel Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code from GitHub
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📂 Sync files to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.bjdatasub.com
+          username: bjdata@bjdatasub.com
+          password: "Mrcoder@123"
+          port: 21
+          server-dir: public_html/
+          dangerous-clean-slate: false
+          log-level: verbose
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/tests/**
+            .env
+            storage/logs/*
+            storage/framework/cache/*
+            storage/framework/sessions/*
+            storage/framework/views/*
