@@ -1,0 +1,4 @@
+---
+deployment:
+  tasks:
+    - /bin/bash /home/ffvmkdiy/repositories/mujaheed/cpanel_deploy.sh
